@@ -3554,6 +3554,7 @@ function glance_image_get_id()
     local id=""
     eval $(openstack image show -f shell "$1")
     echo "$id"
+    [[ $id ]]
 }
 
 # test if image is fully uploaded
@@ -3592,9 +3593,11 @@ function oncontroller_run_tempest()
                 --property hypervisor_type=kvm \
                 $image_name | tee glance.out
     fi
-    local imageid=$(glance_image_get_id $image_name)
-    crudini --set /etc/tempest/tempest.conf orchestration image_ref $imageid
+    local imageid
+    imageid=$(glance_image_get_id $image_name) ||\
+        complain 37 "Image ID for $image_name not found"
     wait_image_active "$image_name" tempest
+    crudini --set /etc/tempest/tempest.conf orchestration image_ref $imageid
     pushd /var/lib/openstack-tempest-test
     echo 1 > /proc/sys/kernel/sysrq
     if iscloudver 5plus; then
@@ -3912,10 +3915,8 @@ function oncontroller_testsetup()
     fi
 
     # wait for image to finish uploading
-    imageid=$(glance_image_get_id $image_name)
-    if ! [[ $imageid ]]; then
+    imageid=$(glance_image_get_id $image_name) ||\
         complain 37 "Image ID for $image_name not found"
-    fi
     wait_image_active "$image_name" testsetup
 
     if [[ $want_ldap = 1 ]] ; then
