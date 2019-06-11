@@ -38,6 +38,8 @@ proposals:
 - barclamp: database
   attributes:
     sql_engine: mysql
+    mysql:
+      innodb_flush_log_at_trx_commit: 0
   deployment:
     elements:
       database-server:
