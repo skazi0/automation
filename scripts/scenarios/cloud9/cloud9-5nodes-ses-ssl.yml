@@ -38,13 +38,13 @@ proposals:
 - barclamp: database
   attributes:
     sql_engine: mysql
-    mysql:
-      innodb_tunings:
-      - "# Write and flush the logs every 60sec to further decouple commit and write
-        for better"
-      - "# performance with laggy storage."
-      - innodb_flush_log_at_timeout = 60
-      innodb_flush_log_at_trx_commit: 0
+#    mysql:
+#      innodb_tunings:
+#      - "# Write and flush the logs every 60sec to further decouple commit and write
+#        for better"
+#      - "# performance with laggy storage."
+#      - innodb_flush_log_at_timeout = 60
+#      innodb_flush_log_at_trx_commit: 0
   deployment:
     elements:
       database-server:
