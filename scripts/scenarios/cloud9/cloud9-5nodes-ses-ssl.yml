@@ -1,5 +1,9 @@
 ---
 proposals:
+- barclamp: crowbar
+  attributes:
+    sync_mark:
+      default_timeout: 120
 - barclamp: pacemaker
   name: services
   attributes:
