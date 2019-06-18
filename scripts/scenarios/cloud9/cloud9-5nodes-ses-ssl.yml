@@ -1,9 +1,9 @@
 ---
 proposals:
-- barclamp: crowbar
-  attributes:
-    sync_mark:
-      timeout_multiplier: 2.0
+#- barclamp: crowbar
+#  attributes:
+#    sync_mark:
+#      timeout_multiplier: 2.0
 - barclamp: pacemaker
   name: services
   attributes:
